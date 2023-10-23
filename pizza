@@ -1,0 +1,64 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+class Pizza {
+    private String name;
+    private double priceInRupees;
+
+    public Pizza(String name, double priceInRupees) {
+        this.name = name;
+        this.priceInRupees = priceInRupees;
+    }
+
+    public double getPriceInRupees() {
+        return priceInRupees;
+    }
+
+    @Override
+    public String toString() {
+        return name + " - ₹" + priceInRupees;
+    }
+}
+
+public class PizzaBillGenerator {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        List<Pizza> menu = new ArrayList<>();
+        menu.add(new Pizza("Margherita", 600.0));
+        menu.add(new Pizza("Pepperoni", 700.0));
+        menu.add(new Pizza("Vegetarian", 650.0));
+
+        double totalInRupees = 0;
+
+        System.out.println("Welcome to Pizza Bill Generator!");
+
+        while (true) {
+            System.out.println("Menu:");
+            for (int i = 0; i < menu.size(); i++) {
+                System.out.println(i + 1 + ". " + menu.get(i));
+            }
+            System.out.println("0. Finish Order");
+
+            System.out.print("Select a pizza (0 to finish): ");
+            int choice = scanner.nextInt();
+
+            if (choice == 0) {
+                break;
+            }
+
+            if (choice < 1 || choice > menu.size()) {
+                System.out.println("Invalid choice. Please try again.");
+                continue;
+            }
+
+            Pizza selectedPizza = menu.get(choice - 1);
+            totalInRupees += selectedPizza.getPriceInRupees();
+            System.out.println(selectedPizza + " added to your order.");
+        }
+
+        System.out.println("Your order is complete. Total bill: ₹" + totalInRupees);
+
+        scanner.close();
+    }
+}
